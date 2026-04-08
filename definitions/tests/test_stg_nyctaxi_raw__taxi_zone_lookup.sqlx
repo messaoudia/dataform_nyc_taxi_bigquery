@@ -1,0 +1,18 @@
+config {
+    type: "test",
+    description: "Test for the taxi zone lookup table in the staging layer.",
+    dataset: "stg_nyctaxi_raw__taxi_zone_lookup"
+}
+
+input "taxi_zone_lookup" {
+    SELECT 1 as location_id, "Test District" as district, "Test Zone" as zone, "Test Service Zone" as service_zone
+    UNION ALL
+    SELECT 2 as location_id, "Test District 2" as district, "Test Zone 2" as zone, "Test Service Zone 2" as service_zone
+}
+
+SELECT
+    location_id,
+    district,
+    zone,
+    service_zone
+FROM ${ ref("stg_nyctaxi_raw__taxi_zone_lookup") }
