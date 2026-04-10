@@ -1,18 +1,28 @@
 name: Compile release + Run marts
 run-name: Started by ${{ github.actor }}
 on:
-  push:
-    branches:
-      - dev
-  pull_request:
-    types:
-      - opened
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: Tags to run
+        required: true
+        default: marts
+        type: choice
+        options:
+          - marts
+          - finance
+          - geo
+      environment:
+        description: Environment
+        type: environment
+        required: true
+
 
 jobs:
   run_if:
     if: github.ref_name == 'dev' || startsWith(github.ref_name, 'release')
     runs-on: ubuntu-latest
-    environment: dev
+    environment: $ENVIRONMENT
     container:
       image: node:25
     steps:
@@ -40,4 +50,4 @@ jobs:
       - name: Dry run
         run: dataform run --dry-run
       - name: Run marts
-        run: dataform run --tags "marts"
+        run: dataform run --tags "$TAGS"
