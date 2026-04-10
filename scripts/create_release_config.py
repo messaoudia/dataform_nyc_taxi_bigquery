@@ -1,5 +1,9 @@
 import json
 import os
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 from google.auth import impersonated_credentials
 from google.oauth2 import service_account
@@ -33,5 +37,5 @@ compilation_request = dataform_v1.CreateCompilationResultRequest(
     ),
 )
 
-response = client.create_compilation_result(request=compilation_request)
-print(response)
+compilation_result = client.create_compilation_result(request=compilation_request)
+logger.info(f"Created compilation result: {compilation_result.name}")
