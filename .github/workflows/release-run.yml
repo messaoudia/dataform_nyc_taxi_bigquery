@@ -35,8 +35,8 @@ jobs:
           "
       - name: Run compile
         run: dataform compile
-      # - name: Run tests
-      #   run: dataform test
+      - name: Run tests
+        run: dataform test
       - name: Dry run
         run: dataform run --dry-run
       - name: Run marts

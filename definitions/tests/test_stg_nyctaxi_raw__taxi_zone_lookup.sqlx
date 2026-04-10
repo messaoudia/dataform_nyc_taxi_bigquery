@@ -1,0 +1,22 @@
+config {
+    type: "test",
+    dataset: "stg_nyctaxi_raw__taxi_zone_lookup"
+}
+
+input "taxi_zone_lookup" {
+    SELECT 1 as LocationID, "Manhattan" as Borough, "Midtown" as Zone, "Yellow Zone" as service_zone
+    UNION ALL
+    SELECT 2 as LocationID, "Brooklyn" as Borough, "Park Slope" as Zone, "Boro Zone" as service_zone
+}
+
+SELECT
+    1 as location_id,
+    "Manhattan" as district,
+    "Midtown" as zone,
+    "Yellow Zone" as service_zone
+UNION ALL
+SELECT
+    2 as location_id,
+    "Brooklyn" as district,
+    "Park Slope" as zone,
+    "Boro Zone" as service_zone

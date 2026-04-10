@@ -4,7 +4,7 @@ config {
     tags: ["data_quality"]
 }
 
-select t.fk_pickup_location_id
+select td.fk_pickup_location_id
 from ${ ref("int_staging__yellow_tripdata_details") } td
 left join ${ ref("stg_nyctaxi_raw__taxi_zone_lookup") } tzl
 on td.fk_pickup_location_id = tzl.location_id
