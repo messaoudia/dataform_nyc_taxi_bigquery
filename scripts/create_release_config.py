@@ -25,7 +25,7 @@ credentials = impersonated_credentials.Credentials(
 
 client = dataform_v1.DataformClient(credentials=credentials)
 
-compilation_request = dataform_v1.CreateCompulationConfigRequest(
+compilation_request = dataform_v1.CreateCompilationResultRequest(
     parent=f"projects/{PROJECT_ID}/locations/{LOCATION}/repositories/{REPOSITORY_ID}",
     compilation_result=dataform_v1.CompilationResult(
         release_config=f"{parent}/releaseConfigs/{RELEASE_CONFIG_ID}"
