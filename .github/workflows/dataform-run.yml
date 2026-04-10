@@ -1,4 +1,4 @@
-name: Compile release + Run marts
+name: Dataform cli run
 run-name: Started by ${{ github.actor }}
 on:
   workflow_dispatch:
