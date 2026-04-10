@@ -28,7 +28,7 @@ jobs:
           node -e "
           const creds = {
             projectId: process.env.PROJECT_ID,
-            credentials: JSON.parse(process.env.GCP_DATAFORM_SA_KEY),
+            credentials: process.env.GCP_DATAFORM_SA_KEY,
             location: process.env.LOCATION
           };
           require('fs').writeFileSync('.df-credentials.json', JSON.stringify(creds));
