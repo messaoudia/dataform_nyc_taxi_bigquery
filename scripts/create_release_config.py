@@ -1,0 +1,36 @@
+import json
+import os
+
+from google.auth import impersonated_credentials
+from google.oauth2 import service_account
+from google.cloud import dataform_v1
+
+SA_KEY = json.loads(os.getenv("GCP_DATAFORM_SA_KEY"))
+PROJECT_ID = os.getenv("PROJECT_ID")
+LOCATION = os.getenv("LOCATION")
+REPOSITORY_ID = os.getenv("REPOSITORY_ID")
+RELEASE_CONFIG_ID = os.getenv("RELEASE_CONFIG_ID")
+TARGET_SA = SA_KEY["client_email"]
+
+source_credentials = service_account.Credentials.from_service_account_info(
+    SA_KEY,
+    scopes=["https://www.googleapis.com/auth/cloud-platform"],
+)
+
+credentials = impersonated_credentials.Credentials(
+    source_credentials=source_credentials,
+    target_principal=TARGET_SA,
+    target_scopes=["https://www.googleapis.com/auth/cloud-platform"],
+)
+
+client = dataform_v1.DataformClient(credentials=credentials)
+
+compilation_request = dataform_v1.CreateCompulationConfigRequest(
+    parent=f"projects/{PROJECT_ID}/locations/{LOCATION}/repositories/{REPOSITORY_ID}",
+    compilation_result=dataform_v1.CompilationResult(
+        release_config=f"{parent}/releaseConfigs/{RELEASE_CONFIG_ID}"
+    ),
+)
+
+response = client.create_compilation_result(request=compilation_request)
+print(response)

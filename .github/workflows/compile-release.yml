@@ -1,0 +1,32 @@
+name: Dataform create compilation result
+run-name: Started by ${{ github.actor }}
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  create-compilation-result:
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Create compilation result
+        env:
+          GCP_DATAFORM_SA_KEY: ${{ secrets.GCP_DATAFORM_SA_KEY }}
+          PROJECT_ID: ${{ vars.PROJECT_ID }}
+          LOCATION: ${{ vars.LOCATION }}
+          REPOSITORY_ID: ${{ vars.REPOSITORY_ID }}
+          RELEASE_CONFIG_ID: ${{ vars.RELEASE_CONFIG_ID }}
+        run: |
+          python scripts/create_release_config.py
