@@ -3,15 +3,15 @@ run-name: Started by ${{ github.actor }}
 on:
   workflow_dispatch:
     inputs:
-      tags:
-        description: Tags to run
-        required: true
-        default: marts
-        type: choice
-        options:
-          - marts
-          - finance
-          - geo
+      # tags:
+      #   description: Tags to run
+      #   required: true
+      #   default: marts
+      #   type: choice
+      #   options:
+      #     - marts
+      #     - finance
+      #     - geo
       environment:
         description: Environment
         type: environment
@@ -49,5 +49,5 @@ jobs:
         run: dataform test
       - name: Dry run
         run: dataform run --dry-run
-      - name: Run marts
-        run: dataform run --tags "$TAGS"
+      # - name: Run marts
+      #   run: dataform run --tags "$TAGS"
